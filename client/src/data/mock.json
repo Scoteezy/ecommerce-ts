@@ -1,0 +1,98 @@
+[
+    {
+      "id": 1,
+      "name": "Acer nitro 5",
+      "description": " Gaming notebook ultra",
+      "price": 1000,
+      "category": "NoteBooks",
+      "imgUrl": "/imgs/placeholder.png"
+    },
+    {
+        "id": 2,
+        "name": "Lenovo gaming notebook",
+        "description": "Gaming notebook ultra 2 ",
+        "price": 1500,
+        "category": "NoteBooks",
+        "imgUrl": "/imgs/placeholder.png"
+      },
+      {
+        "id": 3,
+        "name": "Razer gaming laptop ",
+        "description": "Gaming notebook ultra 3 ",
+        "price": 2000,
+        "category": "NoteBooks",
+        "imgUrl": "/imgs/placeholder.png"
+      },
+      {
+        "id": 4,
+        "name": "HP",
+        "description": "Laptop for work",
+        "price": 900.55,
+        "category": "NoteBooks",
+        "imgUrl": "/imgs/placeholder.png"
+      },
+      {
+        "id": 5,
+        "name": "Gaming PC",
+        "description": "Gaming PC ultra 1 ",
+        "price": 3000,
+        "category": "Computers",
+        "imgUrl": "/imgs/placeholder.png"
+      },
+      {
+        "id": 6,
+        "name": "Gaming PC 2",
+        "description": "Gaming PC ultra 2 ",
+        "price": 2899.99,
+        "category": "Computers",
+        "imgUrl": "/imgs/placeholder.png"
+      },
+      {
+        "id": 7,
+        "name": "PC for work",
+        "description": "PC for work ",
+        "price": 1500,
+        "category": "Computers",
+        "imgUrl": "/imgs/placeholder.png"
+      },
+      {
+        "id": 8,
+        "name": "Gaming monitor",
+        "description": "Gaming Monitor ultra ",
+        "price": 149.99,
+        "category": "Monitor",
+        "imgUrl": "/imgs/placeholder.png"
+      },
+      {
+        "id": 9,
+        "name": "Gaming mouse",
+        "description": "Gaming mouse ultra ",
+        "price": 99.99,
+        "category": "Peripherals",
+        "imgUrl": "/imgs/placeholder.png"
+      },
+      {
+        "id": 10,
+        "name": "Gaming keyboard",
+        "description": "Gaming keyboard ultra ",
+        "price": 119.99,
+        "category": "Peripherals",
+        "imgUrl": "/imgs/placeholder.png"
+      },
+      {
+        "id": 11,
+        "name": "Iphone 15",
+        "description": "good phone) ",
+        "price": 1500,
+        "category": "Phones",
+        "imgUrl": "/imgs/placeholder.png"
+      },
+      {
+        "id": 12,
+        "name": "Poco x3 nfc ultra gaming 1920x1080",
+        "description": "explosive ",
+        "price": 50.99,
+        "category": "Phones",
+        "imgUrl": "/imgs/placeholder.png"
+      }
+  ]

@@ -1,6 +1,5 @@
-import React from 'react'
+import { IStoreItem } from '../models/IStoreItem';
 import StoreItem from './StoreItem'
-import items from '../data/mock.json'
 import styled from 'styled-components'
 
 const Wrapper = styled.section`
@@ -23,10 +22,12 @@ const Wrapper = styled.section`
     }
 `;
 
+interface StoreItemsProps { 
+  items: IStoreItem[];
+}
 
-const StoreItems = () => {
-  console.log('asd')
-  console.log(items)
+const StoreItems = ({items}:StoreItemsProps) => {
+  
   return (
     <>
     <Wrapper>

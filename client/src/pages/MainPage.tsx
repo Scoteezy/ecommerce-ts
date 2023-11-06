@@ -1,7 +1,14 @@
 import StoreItems from '../components/StoreItems'
-const MainPage = () => {
+import { IStoreItem } from '../models/IStoreItem'
+
+interface MainPageProps {
+  items: IStoreItem[]
+}
+
+const MainPage = ({items}:MainPageProps) => {
+  
   return (
-      <StoreItems/>
+      <StoreItems items={items}/>
     )
 }
 

@@ -51,10 +51,9 @@ const Button = styled.button`
   cursor: pointer;
 `
 
-const StoreItem = ({id,name,description,category,imgUrl,price}: StoreItemProps) => {
+const StoreItem = ({name,description,category,imgUrl,price}: StoreItemProps) => {
   console.log(imgUrl)
   return (
-    
     <Container>
       <Img src={imgUrl} alt={name} />
       <Title>

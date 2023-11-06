@@ -88,16 +88,24 @@ const MyInput = styled.input`
     border-style: none;
     box-shadow:var(--shadow);
 `
+interface HeaderProps {
+    handleSearch: (search?:string, category?:string )=>void
+}
 
-
-const Header = () => {
+const Header = ({handleSearch}: HeaderProps) => {
     const [theme,setTheme] = useState('light');
-
+    const [search, setSearch] = useState('');
+    const [category,setCategory] = useState<Option>();
     const toggleTheme = ()=> setTheme(theme ==='light' ? 'dark' : 'light');
 
     useEffect(()=>{
         document.body.setAttribute('data-theme',theme)
     },[theme])
+    useEffect(()=>{
+        const regionValue = category?.value || '';
+        handleSearch(search,regionValue);
+        //eslint-disable-next-line
+      },[search,category])
   return (
     <HeaderElement>
         <Container>
@@ -108,11 +116,11 @@ const Header = () => {
                 placeholder="Категории"
                 isClearable
                 isSearchable={false}
-                value={"Категории"}
-                onChange={()=>console.log('asd')}
+                value={category}
+                onChange={setCategory}
                 />
             </TitleContainer>
-                <MyInput placeholder="Поиск по товарам"/>
+                <MyInput onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{setSearch(e.target.value)}} value={search} placeholder="Поиск по товарам"/>
                 <HeaderControls>
                 <ModeSwitcher onClick={toggleTheme}>
                     {theme ==='light' ? (<IoMoonOutline size="20px"/>) : ( <IoMoon size="20px"/>)}

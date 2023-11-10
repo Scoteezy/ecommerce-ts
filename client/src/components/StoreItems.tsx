@@ -1,7 +1,6 @@
-import { IStoreItem } from '../models/IStoreItem';
 import StoreItem from './StoreItem'
 import styled from 'styled-components'
-
+import { useAppSelector } from "../store/redux-hooks"
 const Wrapper = styled.section`
     width: 100%;
     padding: 2rem 0;
@@ -22,16 +21,13 @@ const Wrapper = styled.section`
     }
 `;
 
-interface StoreItemsProps { 
-  items: IStoreItem[];
-}
-
-const StoreItems = ({items}:StoreItemsProps) => {
-  
+const StoreItems = () => {
+  const data = useAppSelector(store => store.device.sortedDevices)
+  console.log(data)
   return (
     <>
     <Wrapper>
-      {items.map((item)=>
+      {data.map((item)=>
         <div key={item.id}>
           <StoreItem {...item}/>
         </div>

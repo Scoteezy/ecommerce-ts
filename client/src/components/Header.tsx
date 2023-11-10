@@ -4,17 +4,16 @@ import { Container } from "./UI/Container"
 import { useState,useEffect } from "react";
 import { Option } from "../models/IOptions";
 import { CustomSelect } from './UI/CustomSelect';
-const options:Option[] = [
-    {value: 'Computers', label: 'Компьютеры'},
-    {value: 'Monitors', label: 'Мониторы'},
-    {value: 'Peripherals', label: 'Компьютерная переферия'},
-    {value: 'NoteBooks', label: 'Ноутбуки'},
-    {value: 'Phones', label: 'Телефоны'},
-  ] ;
-const HeaderElement  = styled.header`
+import { useAppDispatch, useAppSelector } from "../store/redux-hooks";
+import { handleSearch } from "../store/deviceSlice";
+import { Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
+
+const HeaderElement  = styled.header<{location:string}>`
     box-shadow: var(--shadow);
     background-color: var(--colors-ui-base);
     margin-bottom: 50px;
+    display:${props => props.location ==='/login' || props.location==='/registration'? 'none': 'block'};
 `;
 
 const Wrapper = styled.div`
@@ -42,7 +41,6 @@ const ModeSwitcher = styled.div`
     display: flex;
     cursor: pointer;
     margin-right: 15px;
-    /* font-weight: var(--fw-bold); */
     text-transform: capitalize;
 `;
 const HeaderControls = styled.div`
@@ -56,6 +54,7 @@ const CartButton = styled.button`
     width: 2rem;
     height: 2rem;
     position: relative;
+    cursor: pointer;
     border:none;
     background-color: var(--colors-ui-base);
     display: flex;
@@ -82,32 +81,51 @@ const MyInput = styled.input`
     width: 50%;
     height:3rem;
     padding-left:15px;
-    border-radius: 5px;
+    border-radius: var(--radii);
     color: var(--colors-text);
     background-color: var(--colors-ui-base);
     border-style: none;
     box-shadow:var(--shadow);
 `
-interface HeaderProps {
-    handleSearch: (search?:string, category?:string )=>void
-}
-
-const Header = ({handleSearch}: HeaderProps) => {
+const LoginButton = styled.button`
+    width: 150px;
+    height: 50px;
+    border-radius: var(--radii);
+    font-family: var(--family);
+    border: none;
+    color: var(--colors-text);
+    background-color: var(--colors-ui-base);
+    border-style: none;
+    box-shadow:var(--shadow);
+`
+const StyledLink = styled(Link)`
+    color: var(--colors-text);
+    text-decoration:none;
+`
+const Header = () => {
+    const data = useAppSelector(store => store.categories.categories);
+    const auth = useAppSelector(store=>store.auth.isAuth);
+    const dispatch = useAppDispatch()
+    const options:Option[] = [] ;
+    data.forEach(item=>{
+        options.push({value:item.id, label:item.name })
+    })
     const [theme,setTheme] = useState('light');
     const [search, setSearch] = useState('');
     const [category,setCategory] = useState<Option>();
     const toggleTheme = ()=> setTheme(theme ==='light' ? 'dark' : 'light');
+    const location = useLocation();
+    console.log( location.pathname  )
 
     useEffect(()=>{
         document.body.setAttribute('data-theme',theme)
     },[theme])
     useEffect(()=>{
-        const regionValue = category?.value || '';
-        handleSearch(search,regionValue);
+        dispatch(handleSearch({category: category?.value || '', search: search}))
         //eslint-disable-next-line
       },[search,category])
   return (
-    <HeaderElement>
+    <HeaderElement location={location.pathname}>
         <Container>
             <Wrapper>
             <TitleContainer>
@@ -125,14 +143,18 @@ const Header = ({handleSearch}: HeaderProps) => {
                 <ModeSwitcher onClick={toggleTheme}>
                     {theme ==='light' ? (<IoMoonOutline size="20px"/>) : ( <IoMoon size="20px"/>)}
                 </ModeSwitcher>
-                <CartButton  >
+                {auth?
+                <>
+                 <CartButton  >
                     {theme ==='light' ? (<IoCartOutline size="25px"/>) : ( <IoCart size="25px"/>)}
                     <div>
                     {1}
                     </div>
-
                 </CartButton>
                 {theme ==='light' ? (<IoPersonOutline size="22px"/>) : ( <IoPerson size="22px"/>)}
+                </>
+                : <LoginButton><StyledLink to='/login'>Login</StyledLink> </LoginButton>}
+                
                 </HeaderControls>
             </Wrapper>
         </Container>

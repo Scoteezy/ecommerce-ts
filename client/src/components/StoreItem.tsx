@@ -1,7 +1,9 @@
-import { IStoreItem } from '../models/IStoreItem'
 import styled from 'styled-components'
-import { formatCurrency } from '../store/formatCurrency'
-interface StoreItemProps extends IStoreItem{
+import { formatCurrency } from '../utilities/formatCurrency'
+import { IDevice } from '../models/IDevice'
+import { imgFormatter } from '../utilities/imgFomatter'
+import { useAppSelector } from '../store/redux-hooks'
+interface StoreItemProps extends IDevice{
 }
 const Container = styled.div`
   margin: 0 auto;
@@ -13,9 +15,10 @@ const Container = styled.div`
   overflow:hidden;
 `
 const Img = styled.img`
-  height: 200px;
   width: 100%;
-  object-fit:cover;
+  object-fit: contain;
+  border-radius:15px;
+  max-height:300px;
 `
 const Title = styled.div`
   margin-top: 15px;
@@ -51,18 +54,22 @@ const Button = styled.button`
   cursor: pointer;
 `
 
-const StoreItem = ({name,description,category,imgUrl,price}: StoreItemProps) => {
-  console.log(imgUrl)
+const StoreItem = ({name,brandId,img,typeId,id,info,price}: StoreItemProps) => {
+  const data = useAppSelector((store)=>store.categories.categories)
+  const category = data.find(item=>item.id==typeId);
   return (
     <Container>
-      <Img src={imgUrl} alt={name} />
+      <Img src={imgFormatter(img)} alt={name} />
       <Title>
         <Name>{name}</Name><Price>{formatCurrency(price)}</Price>
       </Title>
       <Description>
-        Deiscription: {description}
+        Описание товара: {info? info.map((item)=>{ return (<p>{item.title}</p>)}) : "Нет описания"}
         <p>
-        Category: {category}
+        Бренд : {brandId}
+        </p>
+        <p>
+        Категория: {category?.name}
         </p>
 
       </Description>

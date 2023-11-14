@@ -36,11 +36,17 @@ const deviceSlice = createSlice({
 	reducers: {
         handleSearch (state,action) { 
             let data = [...state.devices]
-            console.log(action.payload)
+            console.log(action.payload.brand)
+            
             if(action.payload.category){
                 data = state.devices.filter(d => d.typeId == action.payload.category)
             }
-      
+            if(action.payload.brand){
+                data = state.devices.filter(d=> d.brandId==action.payload.brand )
+            }
+            if(action.payload.brand && action.payload.category){
+                data = state.devices.filter(d=> d.brandId==action.payload.brand && d.typeId == action.payload.category )
+            }
             if(action.payload.search) { 
                 data = state.devices.filter(c=>c.name.toLowerCase().includes(action.payload.search.toLowerCase()))
             }

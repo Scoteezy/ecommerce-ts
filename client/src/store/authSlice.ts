@@ -24,7 +24,7 @@ export const setUserAuth = createAsyncThunk(
                 }
             console.log(response)
             const data:Promise<AuthResponse> = await response.json();
-            localStorage.setItem('token', (await data).token);
+            localStorage.setItem('token','Bearer ' +  (await data).token);
             dispatch(setAuth((await data).user))
         }catch(e:unknown){ 
             if (e instanceof Error) return rejectWithValue(e.message)
@@ -49,7 +49,7 @@ export const registerUser = createAsyncThunk(
                 }
             console.log(response)
             const data:Promise<AuthResponse> = await response.json();
-            localStorage.setItem('token', (await data).token);
+            localStorage.setItem('token', 'Bearer ' +(await data).token);
             dispatch(setAuth((await data).user))
         }catch(e:unknown){ 
             if (e instanceof Error) return rejectWithValue(e.message)
@@ -57,33 +57,41 @@ export const registerUser = createAsyncThunk(
         }
     }
 )
-// export const logoutUser = createAsyncThunk(
-//     'users/setUserAuth',
-//     async function(_,{rejectWithValue,dispatch}) {
-//         try{ 
-//             await AuthService.logout();
-//             localStorage.removeItem('token');
-//             dispatch(logout())
-//         }catch(e:unknown){ 
-//             if (e instanceof Error) return rejectWithValue(e.message)
-//             return String(e)
-//         }
-//     }
-// )
-// export const checkAuth = createAsyncThunk(
-//     'users/setUserAuth',
-//     async function (_,{rejectWithValue,dispatch}) {
-//         try{ 
-//             const response = await axios.get<AuthResponse>(`${API_URL}/refresh`,{withCredentials:true});
-//             console.log(response)
-//             localStorage.setItem('token', response.data.accessToken);
-//             dispatch(setAuth(response.data.user))
-//         }catch(e:unknown){ 
-//             if (e instanceof Error) return rejectWithValue(e.message)
-//             return String(e)
-//         }
-//     }
-// )
+export const logoutUser = createAsyncThunk(
+    'users/setUserAuth',
+    async function(_,{rejectWithValue,dispatch}) {
+        try{ 
+            localStorage.removeItem('token');
+            dispatch(logout())
+        }catch(e:unknown){ 
+            if (e instanceof Error) return rejectWithValue(e.message)
+            return String(e)
+        }
+    }
+)
+export const checkAuth = createAsyncThunk(
+    'users/checkAuth',
+    async function (_,{rejectWithValue,dispatch}) {
+        try{ 
+            const response = await fetch('http://localhost:5000/api/user/auth', {
+                method: 'GET',
+                headers: {
+                    credentials: 'include',
+                    Authorization: `${localStorage.getItem('token')}`
+                }
+            });
+            if(!response.ok){
+                throw new Error('Server Error!');
+                }
+            const data:Promise<AuthResponse> = await response.json();
+            localStorage.setItem('token', 'Bearer ' +(await data).token);
+            dispatch(setAuth((await data).user))
+        }catch(e:unknown){ 
+            if (e instanceof Error) return rejectWithValue(e.message)
+            return String(e)
+        }
+    }
+)
 
 const initialState:AuthSlice  = {
     status: 'idle',
@@ -109,7 +117,29 @@ const authSlice = createSlice({
     extraReducers:(builder)=>{
         builder.addCase(setUserAuth.pending, (state)=>{
             state.status = 'loading';
+        }),
+        builder.addCase(setUserAuth.fulfilled, (state)=>{
+            state.status = 'finished';
         })
+        builder.addCase(setUserAuth.rejected, (state)=>{
+            state.status = 'error';
+        }),
+        builder.addCase(registerUser.pending, (state)=>{
+            state.status = 'loading';
+        }),
+        builder.addCase(registerUser.fulfilled, (state)=>{
+            state.status = 'finished';
+        }),
+        builder.addCase(registerUser.rejected, (state)=>{
+            state.status = 'error';
+        }),
+        builder.addCase(checkAuth.rejected, (state)=>{
+            state.status = 'error';
+            state.user = {} as IUser;
+            state.isAuth = false;
+            localStorage.removeItem('token');
+        })
+        
     }
     //     [setUserAuth.rejected]:setError,
     //     [registerUser.pending]:(state)=>{

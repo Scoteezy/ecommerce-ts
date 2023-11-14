@@ -23,7 +23,6 @@ const Wrapper = styled.section`
 
 const StoreItems = () => {
   const data = useAppSelector(store => store.device.sortedDevices)
-  console.log(data)
   return (
     <>
     <Wrapper>

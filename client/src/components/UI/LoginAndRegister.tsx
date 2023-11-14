@@ -7,7 +7,7 @@ export const LoginContainer = styled.div`
     align-items: center;
     margin: 0 auto;
   `
-export const LoginForm = styled.div`
+export const LoginForm = styled.form`
     display:flex;
     flex-direction:column;
     justify-content: center;
@@ -40,3 +40,10 @@ export const LoginForm = styled.div`
     box-shadow:var(--shadow);
     cursor:pointer;
     `
+  export const ErrorMessage =styled.p`
+    font-family: var(--family);
+    color: var(--colors-text);
+    font-size:var(--fs-md);
+    font-weight: var(--fw-light);
+    
+  `

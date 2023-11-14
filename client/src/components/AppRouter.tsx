@@ -3,8 +3,8 @@ import { userRoutes, adminRoutes,publicRoutes } from '../routes';
 import { useAppSelector } from "../store/redux-hooks";
 // import Loader from './UI/Loader/Loader';
 const AppRouter = () => {
-    const auth = useAppSelector(store=> store.auth)
-    // const auth =  true; 
+  const auth = useAppSelector(store=> store.auth)
+    
   return (
     auth.isAuth
         ?auth.user?.role=='ADMIN'?<Routes>

@@ -3,6 +3,7 @@ import { formatCurrency } from '../utilities/formatCurrency'
 import { IDevice } from '../models/IDevice'
 import { imgFormatter } from '../utilities/imgFomatter'
 import { useAppSelector } from '../store/redux-hooks'
+import { Link } from 'react-router-dom'
 interface StoreItemProps extends IDevice{
 }
 const Container = styled.div`
@@ -53,10 +54,17 @@ const Button = styled.button`
   box-shadow:var(--shadow);
   cursor: pointer;
 `
-
+const StyledLink = styled(Link)`
+        color: var(--colors-text);
+        text-decoration:none;
+    `
 const StoreItem = ({name,brandId,img,typeId,id,info,price}: StoreItemProps) => {
   const data = useAppSelector((store)=>store.categories.categories)
   const category = data.find(item=>item.id==typeId);
+  const auth = useAppSelector((store)=>store.auth.isAuth)
+  const brands = useAppSelector((store)=>store.brands.brands);
+  const brandName = brands.find((brand)=>brand.id == brandId)?.name;
+  console.log();
   return (
     <Container>
       <Img src={imgFormatter(img)} alt={name} />
@@ -66,7 +74,7 @@ const StoreItem = ({name,brandId,img,typeId,id,info,price}: StoreItemProps) => {
       <Description>
         Описание товара: {info? info.map((item)=>{ return (<p>{item.title}</p>)}) : "Нет описания"}
         <p>
-        Бренд : {brandId}
+        Бренд : {brandName}
         </p>
         <p>
         Категория: {category?.name}
@@ -74,7 +82,9 @@ const StoreItem = ({name,brandId,img,typeId,id,info,price}: StoreItemProps) => {
 
       </Description>
       <div>
-        <Button>Add to cart</Button>
+        {
+          auth ? <Button>Добавить в корзину</Button> : <Button><StyledLink to='/login'>Авторизоваться</StyledLink></Button>
+        }
       </div>
     </Container>
   )

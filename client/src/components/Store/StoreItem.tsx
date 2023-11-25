@@ -1,9 +1,10 @@
 import styled from 'styled-components'
-import { formatCurrency } from '../utilities/formatCurrency'
-import { IDevice } from '../models/IDevice'
-import { imgFormatter } from '../utilities/imgFomatter'
-import { useAppSelector } from '../store/redux-hooks'
+import { formatCurrency } from '../../utilities/formatCurrency'
+import { IDevice } from '../../models/IDevice'
+import { imgFormatter } from '../../utilities/imgFomatter'
+import { useAppSelector, useAppDispatch } from '../../store/redux-hooks'
 import { Link } from 'react-router-dom'
+import { addToBasket } from '../../store/basketSlice'
 interface StoreItemProps extends IDevice{
 }
 const Container = styled.div`
@@ -14,6 +15,7 @@ const Container = styled.div`
   justify-content:center;
   align-items:center;
   overflow:hidden;
+  border-radius: var(--radii);
 `
 const Img = styled.img`
   width: 100%;
@@ -61,9 +63,10 @@ const StyledLink = styled(Link)`
 const StoreItem = ({name,brandId,img,typeId,id,info,price}: StoreItemProps) => {
   const data = useAppSelector((store)=>store.categories.categories)
   const category = data.find(item=>item.id==typeId);
-  const auth = useAppSelector((store)=>store.auth.isAuth)
+  const auth = useAppSelector((store)=>store.auth)
   const brands = useAppSelector((store)=>store.brands.brands);
   const brandName = brands.find((brand)=>brand.id == brandId)?.name;
+  const dispatch = useAppDispatch();
   console.log();
   return (
     <Container>
@@ -83,7 +86,7 @@ const StoreItem = ({name,brandId,img,typeId,id,info,price}: StoreItemProps) => {
       </Description>
       <div>
         {
-          auth ? <Button>Добавить в корзину</Button> : <Button><StyledLink to='/login'>Авторизоваться</StyledLink></Button>
+          auth.isAuth ? <Button onClick={()=>{dispatch(addToBasket({id: auth.user.id, deviceId: id}))}}>Добавить в корзину</Button> : <Button><StyledLink to='/login'>Авторизоваться</StyledLink></Button>
         }
       </div>
     </Container>

@@ -3,11 +3,13 @@ import authReducer from "./authSlice";
 import deviceReducer from './deviceSlice'
 import categoriesReducer from './categoriesSlice'
 import brandsReducer from "./brandsSlice";
+import basketReducer from "./basketSlice";
 const rootReducer = combineReducers({
     auth: authReducer,
     device: deviceReducer,
     categories: categoriesReducer,
-    brands: brandsReducer
+    brands: brandsReducer,
+    basket: basketReducer
 })
 
 export const store = configureStore({

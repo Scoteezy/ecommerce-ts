@@ -20,8 +20,6 @@ export const adminRoutes:Routes[] = [
     {path: '/user', element: User},
     {path: '/admin', element: AdminPanel},
     {path: '/', element: MainPage},
-
-
 ]
 export const publicRoutes:Routes[] = [
     {path: '/login', element: Login},

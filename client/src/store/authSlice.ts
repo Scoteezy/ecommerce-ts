@@ -105,6 +105,11 @@ const authSlice = createSlice({
     reducers: {
         setAuth(state,action) {
             state.isAuth = true;
+            if(!action.payload.role){
+                const newUser = action.payload;
+                newUser.role = 'USER';
+                state.user = newUser;
+            }
             state.user = action.payload;
             state.status='finished';
 

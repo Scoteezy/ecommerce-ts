@@ -1,12 +1,12 @@
 import styled from "styled-components"
-import { Container } from "./UI/Container"
+import { Container } from "../UI/Container"
 import { useState,useEffect } from "react";
-import { Option } from "../models/IOptions";
-import { CustomSelect } from './UI/CustomSelect';
-import { useAppDispatch, useAppSelector } from "../store/redux-hooks";
-import { handleSearch } from "../store/deviceSlice";
+import { Option } from "../../models/IOptions";
+import { CustomSelect } from '../UI/CustomSelect';
+import { useAppDispatch, useAppSelector } from "../../store/redux-hooks";
+import { handleSearch } from "../../store/deviceSlice";
 import { useLocation } from 'react-router-dom';
-import HeaderControls from "./Header/HeaderControls";
+import HeaderControls from "./HeaderControls";
 
 const HeaderElement  = styled.header<{location:string}>`
     box-shadow: var(--shadow);

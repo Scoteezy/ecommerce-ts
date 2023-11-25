@@ -26,20 +26,7 @@ export const LoginForm = styled.form`
       box-shadow:var(--shadow);
     }
   `
- export const LoginButton = styled.button`
-    width: 150px;
-    height: 50px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    border-radius: var(--radii);
-    font-family: var(--family);
-    border: none;
-    color: var(--colors-text);
-    background-color: var(--colors-ui-base);
-    border-style: none;
-    box-shadow:var(--shadow);
-    cursor:pointer;
-    `
+
   export const ErrorMessage =styled.p`
     font-family: var(--family);
     color: var(--colors-text);

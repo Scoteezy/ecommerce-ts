@@ -2,9 +2,10 @@ import {useState} from 'react'
 import { useAppDispatch,useAppSelector } from '../store/redux-hooks';
 import { setUserAuth } from '../store/authSlice';
 import { Container } from '../components/UI/Container';
-import { LoginContainer,LoginForm,LoginButton } from '../components/UI/LoginAndRegister';
+import { LoginContainer,LoginForm } from '../components/UI/LoginAndRegister';
 import { ErrorMessage } from '../components/UI/LoginAndRegister';
 import { Link } from 'react-router-dom';
+import { LoginButton } from '../components/UI/Buttons';
 const Login = () => {
   const [email,setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -4,17 +4,9 @@ import { Link } from "react-router-dom";
 import { useAppSelector,useAppDispatch } from '../../store/redux-hooks';
 import { logoutUser } from '../../store/authSlice';
 import styled from 'styled-components';
-    const LoginButton = styled.button`
-        width: 150px;
-        height: 50px;
-        border-radius: var(--radii);
-        font-family: var(--family);
-        border: none;
-        color: var(--colors-text);
-        background-color: var(--colors-ui-base);
-        border-style: none;
-        box-shadow:var(--shadow);
-    `
+import { useNavigate } from 'react-router-dom';
+import { UserButton,PrimaryButton } from '../UI/Buttons';
+    
     const StyledLink = styled(Link)`
         color: var(--colors-text);
         text-decoration:none;
@@ -66,20 +58,7 @@ import styled from 'styled-components';
         position: relative;
         border:none;
     `
-     const UserButton = styled.button`
-     color: var(--colors-text);
-     font-size: var(--fs-sm);
-     width: 2rem;
-     height: 2rem;
-     position: relative;
-     cursor: pointer;
-     border:none;
-     background-color: var(--colors-ui-base);
-     display: flex;
-     align-items:center;
-     justify-content: center;
-     margin-right: 20px;
-    `;
+     
     const UserControls = styled.div`
         position: absolute;
         top: 0; 
@@ -108,8 +87,10 @@ const HeaderControls = () => {
     const [theme,setTheme] = useState('light');
     const toggleTheme = ()=> setTheme(theme ==='light' ? 'dark' : 'light');
     const auth = useAppSelector(store=>store.auth);
+    const basket = useAppSelector(store => store.basket.basket)
     const [show,setShow] = useState(false);
     const dispatch= useAppDispatch();
+    const navigate = useNavigate();
     useEffect(()=>{
         document.body.setAttribute('data-theme',theme)
     },[theme])
@@ -120,10 +101,10 @@ const HeaderControls = () => {
         </ModeSwitcher>
         {auth.isAuth?
         <>
-        <CartButton  >
+        <CartButton  onClick={()=>{navigate('/basket')}}>
             {theme ==='light' ? (<IoCartOutline size="25px"/>) : ( <IoCart size="25px"/>)}
             <div>
-            {1}
+            {basket.length}
             </div>
         </CartButton>
         <User>
@@ -138,7 +119,7 @@ const HeaderControls = () => {
         </User>
         
         </>
-        : <LoginButton><StyledLink to='/login'>Авторизоваться</StyledLink> </LoginButton>}
+        : <PrimaryButton><StyledLink to='/login'>Авторизоваться</StyledLink> </PrimaryButton>}
     
     </HeaderControlsStyles>
   )

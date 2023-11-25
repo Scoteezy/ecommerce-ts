@@ -8,3 +8,6 @@ export interface AuthResponse {
 export interface BrandsResponse { 
     data : IBrands[];
 }
+export interface BasketsResponse { 
+    
+}

@@ -15,7 +15,6 @@ export const fetchBrands = createAsyncThunk(
             if (e instanceof Error) return rejectWithValue(e.message)
             return String(e)
         }
-        
     }
 )
 

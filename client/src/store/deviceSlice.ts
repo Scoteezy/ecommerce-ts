@@ -47,8 +47,17 @@ const deviceSlice = createSlice({
             if(action.payload.brand && action.payload.category){
                 data = state.devices.filter(d=> d.brandId==action.payload.brand && d.typeId == action.payload.category )
             }
-            if(action.payload.search) { 
-                data = state.devices.filter(c=>c.name.toLowerCase().includes(action.payload.search.toLowerCase()))
+            if(action.payload.brand && action.payload.category && action.payload.search){
+                data = state.devices.filter(d=> d.brandId==action.payload.brand && d.typeId == action.payload.category && d.name.toLowerCase().includes(action.payload.search.toLowerCase()))
+            }
+            if(action.payload.search &&action.payload.brand && !action.payload.category){
+                data = state.devices.filter(d=> d.brandId==action.payload.brand && d.name.toLowerCase().includes(action.payload.search.toLowerCase()))
+            }
+            if(action.payload.search && action.payload.category  && !action.payload.brand) {
+                data = state.devices.filter(d=>d.typeId == action.payload.category && d.name.toLowerCase().includes(action.payload.search.toLowerCase()))
+            }
+            if(action.payload.search && !action.payload.category && !action.payload.brand ) {
+                data = state.devices.filter(d=> d.name.toLowerCase().includes(action.payload.search.toLowerCase()))
             }
             state.sortedDevices = [...data]
         }

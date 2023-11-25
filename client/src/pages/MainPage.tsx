@@ -1,4 +1,4 @@
-import StoreItems from '../components/StoreItems'
+import StoreItems from '../components/Store/StoreItems'
 import { useAppSelector, useAppDispatch } from "../store/redux-hooks"
 import {useEffect} from 'react'
 import { fetchDevices } from '../store/deviceSlice'
